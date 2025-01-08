@@ -1,0 +1,16 @@
+/* store these fonts in filezilla */
+
+@font-face {
+    font-family: 'MyWebFont';
+    src: url('/fonts/mywebfont.woff2') format('woff2'),
+         url('/fonts/mywebfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  
+  
+  .text {
+    font-family: 'MyWebFont';
+  }
+  

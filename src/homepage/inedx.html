@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Draggable Everything with Different Locations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .draggable {
+            position: absolute;
+            cursor: grab;
+        }
+
+        /* Predefined locations for different elements */
+        #heading {
+            top: 20px;
+            left: 20px;
+        }
+
+        #paragraph {
+            top: 150px;
+            left: 50px;
+        }
+
+        #box1 {
+            top: 300px;
+            left: 150px;
+            width: 150px;
+            height: 150px;
+            background-color: lightblue;
+            border: 2px solid #333;
+        }
+
+        #box2 {
+            top: 500px;
+            left: 350px;
+            width: 150px;
+            height: 150px;
+            background-color: lightgreen;
+            border: 2px solid #333;
+        }
+
+        #additionalText {
+            top: 200px;
+            left: 500px;
+        }
+    </style>
+
+
+    <script>
+        // Function to enable free dragging of an element
+        function makeElementDraggable(element) {
+            let offsetX = 0, offsetY = 0, initialX = 0, initialY = 0;
+
+            element.onmousedown = function(event) {
+                // Get the initial mouse position
+                initialX = event.clientX;
+                initialY = event.clientY;
+
+                document.onmousemove = function(event) {
+                    // Calculate how far the mouse has moved
+                    offsetX = initialX - event.clientX;
+                    offsetY = initialY - event.clientY;
+                    initialX = event.clientX;
+                    initialY = event.clientY;
+
+                    // Set the new position of the element
+                    element.style.top = (element.offsetTop - offsetY) + "px";
+                    element.style.left = (element.offsetLeft - offsetX) + "px";
+                };
+
+                // Stop moving the element when the mouse is released
+                document.onmouseup = function() {
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                };
+            };
+        }
+
+        // Make every element with the 'draggable' class draggable
+        document.querySelectorAll('.draggable').forEach(function(element) {
+            makeElementDraggable(element);
+        });
+    </script>
+

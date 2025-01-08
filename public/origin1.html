@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origin 1 (Parent)</title>
+</head>
+<body>
+    <h1>Origin 1 (Parent)</h1>
+    <iframe
+        src="./origin2.html"
+        id="iframe"
+        width="600"
+        height="400"
+        style="border: 1px solid black;"
+    ></iframe>
+
+    <script>
+        // Event listener for messages from the iframe
+        window.addEventListener('message', (event) => {
+            // Since both files are from the same origin, origin validation is optional
+            if (event.origin !== 'http://127.0.0.1:5500') {
+                console.warn('Blocked message from untrusted origin:', event.origin);
+                return;
+            }
+
+            // Handle the message
+            if (event.data.type === 'TRIPLE_CLICK') {
+                console.log('Message received from iframe:', event.data.payload);
+                alert(`Triple-click detected! Data: ${JSON.stringify(event.data.payload)}`);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+.newsletter-container {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%; /* Set width to 100% */
+    max-width: 9000px; /* Optional: Set maximum width */
+    margin: auto;
+}
+
+.signup-btn {
+    background-color: orange;
+    color: black; /* Ensure the text is visible */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.disclaimer {
+    font-size: 12px;
+    margin-top: 10px;
+}
