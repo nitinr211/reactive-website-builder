@@ -13,6 +13,7 @@
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
     "fs": "^0.0.1-security",
+    "mdb-react-ui-kit": "^9.0.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.4",
     "net": "^1.0.2",
@@ -25,7 +26,7 @@
     "react-router-dom": "^6.15.0",
     "react-scale-text": "^1.2.2",
     "react-scripts": "5.0.1",
-    "reactstrap": "^9.2.0",
+    "reactstrap": "^9.2.3",
     "stream-browserify": "^3.0.0",
     "timers-browserify": "^2.0.12",
     "tls": "^0.0.1",
@@ -58,6 +59,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-    
   }
 }

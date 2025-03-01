@@ -14,7 +14,7 @@ const FileLoader = ({ iframeSrc, setIframeSrc, onSetShowTextList }) => {
     // Define URLs for different editors
     const indexHtml1Url = 'http://localhost:7001';
     const indexHtml2Url = 'http://localhost:7000';
-    const indexPhpUrl = 'http://localhost:8000';
+    const indexPhpUrl = 'http://127.0.0.1:8000';
 
 
     useEffect(() => {
@@ -76,7 +76,7 @@ const FileLoader = ({ iframeSrc, setIframeSrc, onSetShowTextList }) => {
             <iframe
                 ref={iframeRef}
                 src={iframeSrc}
-                 sandbox="allow-scripts allow-same-origin"
+                 sandbox="allow-forms allow-scripts allow-same-origin"
                 style={{ width: '100%', height: '800px', border: 'none' }}
                 title="Content Viewer"
                 onLoad={handleIframeLoad}

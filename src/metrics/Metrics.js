@@ -1,183 +1,124 @@
-import React, { useState } from 'react';
-import { Table, Container, Row, Col, Badge, Button } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { Table, Container, Row, Col, Button, Nav, NavItem, NavLink } from 'reactstrap';
 
 const Metrics = () => {
-  const [ads, setAds] = useState([
-    {
-      id: 1,
-      adName: 'Ad Campaign 1',
-      impressions: 1000,
-      clicks: 150,
-      conversionRate: 0.15,
-      cpc: 0.50,
-      cpa: 20,
-      ctr: 15,
-      mediaUrl: 'https://www.example.com/video1.mp4',
-      mediaType: 'video', // Can be 'video' or 'photo'
-      description: 'Promoting our latest product launch with a video.',
-      isRunning: false,
-    },
-    {
-      id: 2,
-      adName: 'Ad Campaign 2',
-      impressions: 800,
-      clicks: 120,
-      conversionRate: 0.20,
-      cpc: 0.70,
-      cpa: 25,
-      ctr: 12,
-      mediaUrl: 'https://www.example.com/photo1.jpg',
-      mediaType: 'photo', // Can be 'video' or 'photo'
-      description: 'Highlighting our seasonal discount campaign.',
-      isRunning: false,
-    },
-    // Add more ads here
-  ]);
+  const [activeTab, setActiveTab] = useState('dropshipping');
+  const [earnings, setEarnings] = useState(1200);
+  const [data, setData] = useState({
+    dropshipping: [
+      { productname: 'Wireless Earbuds', supplier: 'TechSupply', price: '$25', margin: '$15', budget: '$100' },
+      { productname: 'Smart Watch', supplier: 'GadgetWorld', price: '$40', margin: '$20', budget: '$200' }
+    ],
+    fbaWholesale: [
+      { productname: 'Organic Protein Powder', supplier: 'HealthCorp', price: '$30', margin: '$12' },
+      { productname: 'Reusable Water Bottle', supplier: 'EcoGoods', price: '$18', margin: '$8' }
+    ],
+    fbaArbitrage: [
+      { productname: 'Bluetooth Speaker', source: 'RetailStoreA', price: '$35', amazonprice: '$50', profit: '$10' },
+      { productname: 'Gaming Mouse', source: 'RetailStoreB', price: '$20', amazonprice: '$35', profit: '$8' }
+    ],
+    softwareContracts: [
+      { contractname: 'E-commerce Website', client: 'RetailBrandX', budget: '$5000', duration: '2 months' },
+      { contractname: 'Mobile App Development', client: 'StartupY', budget: '$8000', duration: '3 months' }
+    ],
+    remoteJobs: [
+      { jobtitle: 'Frontend Developer', company: 'Tech Innovators', location: 'Remote', salary: '$90K' },
+      { jobtitle: 'Digital Marketer', company: 'Ecom Solutions', location: 'Remote', salary: '$75K' }
+    ],
+    saasCompanies: [
+      { companyname: 'CloudSync', product: 'Cloud Storage', revenue: '$500K', users: '50K' },
+      { companyname: 'AI Helper', product: 'AI Chatbot', revenue: '$750K', users: '70K' }
+    ],
+    youtubeChannels: [
+      { channelname: 'Tech Reviews', niche: 'Technology', subscribers: '100K', revenue: '$10K' },
+      { channelname: 'Daily Vlogs', niche: 'Lifestyle', subscribers: '200K', revenue: '$15K' }
+    ]
+  });
 
-  const startAd = (id, concept) => {
-    fetch(`/meta-api/start-ad/${id}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ concept }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        setAds(ads.map(ad => (ad.id === id ? { ...ad, isRunning: true } : ad)));
-        console.log('Ad started successfully:', data);
-      })
-      .catch(error => console.error('Error starting ad:', error));
+  const addNewItem = (key) => {
+    console.log(`Adding new item to ${key}`);
   };
 
-  const stopAd = id => {
-    fetch(`/meta-api/stop-ad/${id}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(response => response.json())
-      .then(data => {
-        setAds(ads.map(ad => (ad.id === id ? { ...ad, isRunning: false } : ad)));
-        console.log('Ad stopped successfully:', data);
-      })
-      .catch(error => console.error('Error stopping ad:', error));
+  const addCreative = (product) => {
+    console.log(`Adding creative to product: ${product.productname}`);
   };
 
-  const checkAndStopAds = () => {
-    ads.forEach(ad => {
-      if (ad.cpc > 1 || ad.ctr < 10 || ad.cpa > 30) {
-        stopAd(ad.id);
-      }
-    });
+  const setBudget = (product) => {
+    console.log(`Setting budget for product: ${product.productname}`);
   };
 
+  const renderTable = (key, columns, actions = []) => (
+    <>
+      <Button color="primary" className="mb-2" onClick={() => addNewItem(key)}>Add New</Button>
+      <Table striped bordered hover responsive>
+        <thead>
+          <tr>
+            {columns.map(col => <th key={col}>{col}</th>)}
+            {actions.length > 0 && <th>Actions</th>}
+          </tr>
+        </thead>
+        <tbody>
+          {data[key].map((item, index) => (
+            <tr key={index}>
+              {columns.map(col => <td key={col}>{item[col.toLowerCase().replace(/ /g, '')]}</td>)}
+              {actions.length > 0 && (
+                <td>
+                  {actions.map(action => (
+                    <Button key={action.label} color={action.color} onClick={() => action.onClick(item)}>
+                      {action.label}
+                    </Button>
+                  ))}
+                </td>
+              )}
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </>
+  );
 
-
-  const BusinessConcept = () => {
-    return (
-      <Container fluid className="bg-light py-5">
-        <Row className="align-items-center">
-          <Col md="6">
-            <h1 className="display-4 text-primary">Business Concept</h1>
-            <p className="lead mt-4">
-              We specialize in creating innovative ad campaigns tailored for businesses across various niches, including 
-              <strong> E-commerce, Technology, Health & Wellness, Education, </strong> and <strong>Finance</strong>. 
-              Our mission is to maximize visibility, engagement, and conversions through dynamic advertising strategies.
-            </p>
-            <p>
-              Using cutting-edge tools and actionable metrics, we design ads that resonate with your audience. Whether it's a 
-              captivating video or a stunning image, our campaigns are tailored to your unique business needs.
-            </p>
-            <Button color="primary" size="lg" className="mt-3">
-             View the business homepage here
-            </Button>
-          </Col>
-          <Col md="6">
-            <img
-              src="https://via.placeholder.com/600x400"
-              alt="Business Concept Visual"
-              className="img-fluid rounded shadow"
-            />
-          </Col>
-        </Row>
-      </Container>
-    );
-  };
   return (
     <Container>
-      <BusinessConcept/>
       <Row>
         <Col>
-          <h2>Ad Performance</h2>
-          <Table striped bordered hover responsive>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Ad Name</th>
-                <th>Description</th>
-                <th>Impressions</th>
-                <th>Clicks</th>
-                <th>Conversion Rate (%)</th>
-                <th>CPC ($)</th>
-                <th>CTR (%)</th>
-                <th>CPA ($)</th>
-                <th>Media</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {ads.map(ad => (
-                <tr key={ad.id}>
-                  <td>{ad.id}</td>
-                  <td>{ad.adName}</td>
-                  <td>{ad.description}</td>
-                  <td>{ad.impressions}</td>
-                  <td>{ad.clicks}</td>
-                  <td>{(ad.conversionRate * 100).toFixed(2)}</td>
-                  <td>{ad.cpc.toFixed(2)}</td>
-                  <td>{ad.ctr}</td>
-                  <td>{ad.cpa.toFixed(2)}</td>
-                  <td>
-                    {ad.mediaType === 'video' ? (
-                      <video controls width="100" height="100">
-                        <source src={ad.mediaUrl} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                    ) : (
-                      <img
-                        src={ad.mediaUrl}
-                        alt={ad.adName}
-                        style={{ width: '100px', height: '100px' }}
-                      />
-                    )}
-                  </td>
-                  <td>{ad.isRunning ? 'Running' : 'Stopped'}</td>
-                  <td>
-                    <Button
-                      color="success"
-                      onClick={() => startAd(ad.id, 'Sample Concept')}
-                      disabled={ad.isRunning}
-                    >
-                      Start
-                    </Button>{' '}
-                    <Button
-                      color="danger"
-                      onClick={() => stopAd(ad.id)}
-                      disabled={!ad.isRunning}
-                    >
-                      Stop
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <h2>Business & Opportunity Management</h2>
+          <h4>Today's Earnings: ${earnings}</h4>
+          <Nav tabs>
+            {['dropshipping', 'fbaWholesale', 'fbaArbitrage', 'softwareContracts', 'remoteJobs', 'saasCompanies','youtubeChannels'].map(tab => (
+              <NavItem key={tab}>
+                <NavLink
+                  href="#"
+                  active={activeTab === tab}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab.replace(/([A-Z])/g, ' $1').trim()}
+                </NavLink>
+              </NavItem>
+            ))}
+          </Nav>
         </Col>
       </Row>
-      <Row>
+
+      <Row className="mt-3">
         <Col>
-          <Button color="primary" onClick={checkAndStopAds}>
-            Check & Stop Ads
-          </Button>
+          {activeTab === 'dropshipping' && renderTable('dropshipping', ['Product Name', 'Supplier', 'Price', 'Margin', 'Budget'], [
+            { label: 'Start', color: 'success', onClick: item => console.log('Starting', item) },
+            { label: 'Add Creative', color: 'info', onClick: item => addCreative(item) },
+            { label: 'Set Budget', color: 'warning', onClick: item => setBudget(item) }
+          ])}
+          {activeTab === 'fbaWholesale' && renderTable('fbaWholesale', ['Product Name', 'Supplier', 'Price', 'Margin'], [
+            { label: 'List', color: 'primary', onClick: item => console.log('Listing', item) },
+            { label: 'Source', color: 'info', onClick: item => console.log('Sourcing', item) }
+          ])}
+          {activeTab === 'fbaArbitrage' && renderTable('fbaArbitrage', ['Product Name', 'Source', 'Price', 'Amazon Price', 'Profit'])}
+          {activeTab === 'softwareContracts' && renderTable('softwareContracts', ['Contract Name', 'Client', 'Budget', 'Duration'], [
+            { label: 'Follow-up Email', color: 'warning', onClick: item => console.log('Following up', item) }
+          ])}
+          {activeTab === 'remoteJobs' && renderTable('remoteJobs', ['Job Title', 'Company', 'Location', 'Salary'], [
+            { label: 'Apply', color: 'success', onClick: item => console.log('Applying', item) }
+          ])}
+          {activeTab === 'saasCompanies' && renderTable('saasCompanies', ['Company Name', 'Product', 'Revenue', 'Users'])}
+          {activeTab === 'youtubeChannels' && renderTable('youtubeChannels', ['Channel Name', 'Niche', 'Subscribers', 'Revenue'])}
         </Col>
       </Row>
     </Container>

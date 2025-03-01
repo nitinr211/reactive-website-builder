@@ -6,6 +6,7 @@ import FileLoader from './menu/FileLoader';
 import Metrics from './metrics/Metrics';
 import TextList from './builder/TextList';
 import BuilderTable from './BuilderTable';
+
 import axios from 'axios';
 
 
@@ -120,7 +121,9 @@ function App() {
                 onShowMetrics={handleShowMetrics}
                 onShowCRM={handleShowCRM}
             />
+          
             <div className="app-container">
+                
                 {showDatabases && <Databases />}
                 {showMetrics && <Metrics />}
                 {showFileLoader && (
