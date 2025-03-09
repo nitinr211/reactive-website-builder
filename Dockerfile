@@ -10,7 +10,7 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install --force
 
-# Copy the entire app (including src/pathPolyfill.js)
+# Copy the entire app
 COPY . .
 
 # Build the React app
