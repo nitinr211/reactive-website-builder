@@ -3,11 +3,10 @@ import axios from 'axios';
 import ReactHtmlParser, {processNodes, convertNodeToElement, htmlparser2} from 'react-html-parser'
 import {Rnd} from 'react-rnd';
 import FontSelect from '../fonts/font-select';
-import { relative } from "path";
 
 
 
-const fs = require('fs');
+
 
 class TextList extends React.Component {
 

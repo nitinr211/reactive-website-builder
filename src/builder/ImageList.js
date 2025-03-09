@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from 'axios';
 import ReactHtmlParser, {processNodes, convertNodeToElement, htmlparser2} from 'react-html-parser'
 import {Rnd} from 'react-rnd';
-const fs = require('fs');
 
 class ImageList extends React.Component {
 

@@ -3,7 +3,6 @@ import axios from 'axios';
 import ReactHtmlParser, {processNodes, convertNodeToElement, htmlparser2} from 'react-html-parser'
 import {Rnd} from 'react-rnd';
 
-const fs = require('fs');
 
 class SvgMove extends React.Component {
 
