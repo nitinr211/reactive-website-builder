@@ -11,7 +11,8 @@ COPY package.json package-lock.json ./
 RUN npm install --force
 
 # Manually install `path-browserify` for Webpack 5 compatibility
-RUN npm install path-browserify
+RUN npm install path-browserify --force
+
 
 # Copy the rest of the React app files
 COPY . .
