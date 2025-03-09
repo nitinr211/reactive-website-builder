@@ -7,11 +7,14 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json first for better caching
 COPY package.json package-lock.json ./
 
-# Install dependencies, including `path-browserify`
+# Install dependencies, including customize-cra and react-app-rewired
 RUN npm install --force
 
-# Copy the entire app (including webpack.config.js)
+# Copy the entire app, including config-overrides.js
 COPY . .
+
+# Ensure Webpack recognizes the polyfill
+ENV NODE_OPTIONS="--openssl-legacy-provider"
 
 # Build the React app using react-app-rewired
 RUN npm run build
