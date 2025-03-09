@@ -10,10 +10,10 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install --force
 
-# Copy the entire app
+# Copy the entire app, including webpack.config.js
 COPY . .
 
-# Build the React app using Create React App
+# Build the React app using Create React App with custom Webpack config
 RUN npm run build
 
 # Install serve globally to serve the built React files
@@ -24,4 +24,3 @@ EXPOSE 5000
 
 # Start the server
 ENTRYPOINT ["serve", "-s", "build", "-l", "5000"]
-
