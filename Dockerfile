@@ -7,13 +7,17 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json first for better caching
 COPY package.json package-lock.json ./
 
-# Install dependencies
+# Install dependencies, including react-app-rewired and customize-cra
 RUN npm install --force
 
-# Copy the entire app, including webpack.config.js
+# Copy the entire app, including config-overrides.js
 COPY . .
 
-# Build the React app using Create React App with custom Webpack config
+# Debug: Check if `config-overrides.js` exists inside the container
+RUN ls -la /usr/src/app
+RUN cat /usr/src/app/config-overrides.js
+
+# Build the React app using react-app-rewired
 RUN npm run build
 
 # Install serve globally to serve the built React files
