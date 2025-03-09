@@ -4,23 +4,16 @@ FROM node:16-alpine
 # Set the working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json for better caching
+# Copy package.json and package-lock.json first for better caching
 COPY package.json package-lock.json ./
 
-# Install dependencies
+# Install dependencies, including `path-browserify`
 RUN npm install --force
 
-# Manually install `path-browserify` for Webpack 5 compatibility
-RUN npm install path-browserify --force
-
-
-# Copy the rest of the React app files
+# Copy the entire app (including webpack.config.js)
 COPY . .
 
-# Inject Webpack fallback config for 'path' module
-RUN echo 'module.exports = { resolve: { fallback: { "path": require.resolve("path-browserify") } } }' > webpack.config.js
-
-# Build the React app
+# Build the React app using react-app-rewired
 RUN npm run build
 
 # Install serve globally to serve the built React files
@@ -29,5 +22,5 @@ RUN npm install -g serve
 # Expose port 5000 for the server
 EXPOSE 5000
 
-# Use ENTRYPOINT to prevent accidental overrides
+# Start the server
 ENTRYPOINT ["serve", "-s", "build", "-l", "5000"]
