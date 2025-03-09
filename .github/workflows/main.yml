@@ -16,7 +16,7 @@ jobs:
     - name: Authenticate with Google Cloud
       uses: google-github-actions/auth@v1
       with:
-        credentials_json: ${{ secrets.GCP_SA_KEY }}  # Uses GitHub Secret, NOT .env file
+        credentials_json: ${{ secrets.GCP_AUTH_TOKEN }}  # Uses GitHub Secret, NOT .env file
 
     - name: Configure Docker for Artifact Registry
       run: gcloud auth configure-docker us-central1-docker.pkg.dev
