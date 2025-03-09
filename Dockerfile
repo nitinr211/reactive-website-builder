@@ -7,17 +7,13 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json first for better caching
 COPY package.json package-lock.json ./
 
-# Install dependencies, including customize-cra and react-app-rewired
+# Install dependencies
 RUN npm install --force
 
-# Copy the entire app, including `config-overrides.js`
+# Copy the entire app (including src/pathPolyfill.js)
 COPY . .
 
-# Debug: Check if `config-overrides.js` exists inside the container
-RUN ls -la /usr/src/app
-RUN cat /usr/src/app/config-overrides.js
-
-# Build the React app using react-app-rewired
+# Build the React app
 RUN npm run build
 
 # Install serve globally to serve the built React files
