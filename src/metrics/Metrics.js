@@ -84,7 +84,7 @@ const Metrics = () => {
           <h2>Business & Opportunity Management</h2>
           <h4>Today's Earnings: ${earnings}</h4>
           <Nav tabs>
-            {['dropshipping', 'fbaWholesale', 'fbaArbitrage', 'softwareContracts', 'remoteJobs', 'saasCompanies','youtubeChannels'].map(tab => (
+            {['dropshipping', 'fbaWholesale', 'fbaArbitrage', 'softwareContracts', 'remoteJobs','affiliateMarketing', 'saasCompanies','youtubeChannels'].map(tab => (
               <NavItem key={tab}>
                 <NavLink
                   href="#"
@@ -115,6 +115,9 @@ const Metrics = () => {
             { label: 'Follow-up Email', color: 'warning', onClick: item => console.log('Following up', item) }
           ])}
           {activeTab === 'remoteJobs' && renderTable('remoteJobs', ['Job Title', 'Company', 'Location', 'Salary'], [
+            { label: 'Apply', color: 'success', onClick: item => console.log('Applying', item) }
+          ])}
+           {activeTab === 'affiliateMarketing' && renderTable('affiliateMarketing', ['Blog or Product Title', 'Sales Count', 'Adsense', 'Earnings'], [
             { label: 'Apply', color: 'success', onClick: item => console.log('Applying', item) }
           ])}
           {activeTab === 'saasCompanies' && renderTable('saasCompanies', ['Company Name', 'Product', 'Revenue', 'Users'])}

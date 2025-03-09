@@ -1,51 +1,29 @@
-name: Deploy Node.js App with Docker
+name: Push Docker Image to Artifact Registry
 
 on:
   push:
     branches:
-      - main  # Runs when code is pushed to `main`
+      - main
 
 jobs:
-  deploy:
+  push-to-artifact-registry:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Set Up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+    - name: Authenticate with Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SA_KEY }}  # Uses GitHub Secret, NOT .env file
 
-      - name: Install Dependencies & Build
-        run: |
-          npm install
-          npm run build  # Builds the app (React, Vue, Next.js, etc.)
+    - name: Configure Docker for Artifact Registry
+      run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
-      - name: Authenticate with Google Cloud
-        uses: google-github-actions/auth@v1
-        with:
-          workload_identity_provider: "projects/YOUR_PROJECT_NUMBER/locations/global/workloadIdentityPools/github/providers/github-provider"
-          service_account: "github-actions@YOUR_PROJECT_ID.iam.gserviceaccount.com"
+    - name: Build and Push Docker Image
+      run: |
+       
+        docker build -t us-central1-docker.pkg.dev/chrome-setup-445605-f8/my-repo/architect-app:latest .
+        docker push us-central1-docker.pkg.dev/chrome-setup-445605-f8/my-repo/architect-app:latest
 
-      - name: Set up Docker CLI
-        run: |
-          gcloud auth configure-docker gcr.io
-
-      - name: Build & Push Docker Image
-        run: |
-          docker build -t gcr.io/YOUR_PROJECT_ID/${{ github.repository }}:${{ github.sha }} .
-          docker push gcr.io/YOUR_PROJECT_ID/${{ github.repository }}:${{ github.sha }}
-
-      - name: SSH into Compute Engine and Deploy
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.GCE_VM_IP }}
-          username: ${{ secrets.GCE_VM_USER }}
-          key: ${{ secrets.GCE_SSH_KEY }}
-          script: |
-            docker pull gcr.io/YOUR_PROJECT_ID/${{ github.repository }}:${{ github.sha }}
-            docker stop app || true
-            docker rm app || true
-            docker run -d --name app -p 80:80 gcr.io/YOUR_PROJECT_ID/${{ github.repository }}:${{ github.sha }}
