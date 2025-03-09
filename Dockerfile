@@ -13,9 +13,6 @@ RUN npm install --force
 # Copy the entire app, including config-overrides.js
 COPY . .
 
-# Ensure Webpack recognizes the polyfill
-ENV NODE_OPTIONS="--openssl-legacy-provider"
-
 # Build the React app using react-app-rewired
 RUN npm run build
 
