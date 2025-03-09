@@ -13,7 +13,7 @@ RUN npm install --force
 # Copy the entire app
 COPY . .
 
-# Build the React app
+# Build the React app using Create React App
 RUN npm run build
 
 # Install serve globally to serve the built React files
@@ -24,3 +24,4 @@ EXPOSE 5000
 
 # Start the server
 ENTRYPOINT ["serve", "-s", "build", "-l", "5000"]
+
