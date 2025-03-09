@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json first for better caching
 COPY package.json package-lock.json ./
 
-# Install dependencies, including react-app-rewired and customize-cra
+# Install dependencies
 RUN npm install --force
 
 # Copy the entire app, including config-overrides.js
