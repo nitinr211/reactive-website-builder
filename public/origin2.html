@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origin 2 (Iframe)</title>
+</head>
+<body>
+    <h1>Origin 2 (Iframe)</h1>
+    <div data-ar-id="12345">Triple-click me!</div>
+
+    <script>
+        let clickCount = 0;
+        let clickTimer;
+
+        document.addEventListener('click', (event) => {
+            clickCount += 1;
+
+            if (clickCount === 1) {
+                clickTimer = setTimeout(() => (clickCount = 0), 500); // Reset click count after 500ms
+            }
+
+            if (clickCount === 3) {
+                const dataArId = event.target.getAttribute('data-ar-id') || 'default-id';
+                const outerHtml = event.target.outerHTML;
+
+                console.log('Triple-click detected. Sending message to parent.');
+
+                // Send message to parent
+                parent.postMessage(
+                    {
+                        type: 'TRIPLE_CLICK',
+                        payload: { dataArId, outerHtml },
+                    },
+                    'http://127.0.0.1:5500' // Parent's origin
+                );
+
+                clickCount = 0; // Reset click count
+                clearTimeout(clickTimer);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+
+<li data-arr-id= wVdl8Ds51a style="font-size: null; font-family: null; color: null;"><h1 data-ar-id="wVdl8Ds51a" contenteditable="true">Better Soons For Your Business</h1></li><li data-arr-id= wVdl8Ds51a style="font-size: null; font-family: null; color: null;"><h1 data-ar-id="wVdl8Ds51a" contenteditable="true">Better Solutions For Your Business</h1></li><li data-arr-id= sigPR3Chwy style="font-size: null; font-family: null; color: null;"><h2 data-ar-id="sigPR3Chwy" contenteditable="true">We are team of talanted designers making websites with Bootstrap</h2></li>
+
+<script>
+    let clickCount = 0; // Properly initialize clickCount as 0
+    let clickTimer; // Initialize clickTimer to use in the timeout logic
+
+    document.addEventListener('click', function (event) {
+        clickCount += 1;
+
+        if (clickCount === 1) {
+            clickTimer = setTimeout(() => {
+                clickCount = 0;
+            }, 500);
+        }
+
+        if (clickCount === 3) {
+            const dataArId = event.target.getAttribute('data-ar-id');
+            if (dataArId) {
+                console.log('Triple-click detected:', dataArId);
+
+                // Get the outer HTML of the clicked element
+                const outerHtml = event.target.outerHTML;
+
+                // console.log('Sending message to parent:', {
+                //  type: 'TRIPLE_CLICK',
+                //   payload: { dataArId, outerHtml },
+                // });
+                // parent.postMessage(
+                //     {
+                //         type: 'TRIPLE_CLICK',
+                //         payload: { dataArId, outerHtml },
+                //     },
+                //         '*'
+                //     );
+
+                parent.postMessage(
+                    {
+                        type: 'TRIPLE_CLICK',
+                        payload: { dataArId, outerHtml },
+                    },
+                    'http://localhost:3000' // Parent's origin
+                );
+            "*" //or "www.parentpage.com"
+       
+                // AJAX request to set `selected` to 1, including `outerHTML` in the payload
+                fetch('http://localhost:8003/api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        dataArId, 
+                        action: 'setSelected', 
+                        outerHtml // Include the outerHTML
+                    }),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Server error: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Server response:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error in triple-click action:', error);
+                    });
+
+                clearTimeout(clickTimer);
+                clickCount = 0;
+            } else {
+                // Reset the click count after a short delay if it's not a triple-click
+                clearTimeout(clickTimer);
+                clickTimer = setTimeout(() => {
+                    clickCount = 0;
+                }, 500); // 500ms delay between clicks
+            }
+        }
+    });
+</script>

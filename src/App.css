@@ -1,0 +1,13 @@
+.App {
+    text-align: center;
+  }
+  
+  
+  .app-container {
+    width: 1700px;
+    height: 100%;
+    position: relative;
+    margin: 10px auto;
+    overflow: hidden;
+  }
+  

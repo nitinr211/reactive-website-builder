@@ -1,0 +1,11 @@
+.input-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: white; /* Optional: Add a background color to the input container */
+  }
+  
+  .image-container {
+    margin-top: /* Adjust as needed */;
+  }
+  

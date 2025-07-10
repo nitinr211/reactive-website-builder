@@ -1,0 +1,29 @@
+.horizontal-scroll-section {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 20px 0;
+}
+
+.tile-container {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.tile {
+    display: inline-block;
+    width: 300px;
+    margin-right: 20px;
+}
+
+.tile img {
+    width: 100%;
+    height: auto;
+}
+
+.tile h2 {
+    margin: 10px 0;
+}
+
+.tile p {
+    margin: 0;
+}

@@ -1,0 +1,11 @@
+services:
+  php:
+    build:
+      context: .
+    image: us-central1-docker.pkg.dev/.../digicraft:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html         # This gives container access to all project files
+    depends_on:
+      - db
