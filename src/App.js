@@ -18,7 +18,7 @@ function App() {
   const [status, setStatus] = useState('Initializing...');
 
   useEffect(() => {
-    const baseURL = 'http://localhost:8000';
+    const baseURL = 'http://34.55.99.124:8080/';
 
     setStatus('Getting CSRF cookie...');
 
@@ -27,7 +27,7 @@ function App() {
     })
       .then(res => {
       if (!res.ok) {
-        window.location.href = 'https://krdc.us';
+        window.location.replace = 'http://krdc.us';
         throw new Error('Failed to get CSRF cookie');
       }
       setStatus('CSRF cookie set. Logging in...');
@@ -37,7 +37,7 @@ function App() {
     })
     .then(res => {
       if (!res.ok) {
-        window.location.href = 'http://krdc.us';
+        window.location.replace = 'http://krdc.us';
         throw new Error('Mock login failed');
       }
       setStatus('Login response received. Attempting to parse...');
