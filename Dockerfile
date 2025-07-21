@@ -18,7 +18,7 @@ RUN ls -la /usr/src/app
 RUN cat /usr/src/app/config-overrides.js
 
 # Build the React app using react-app-rewired
-RUN npm run build
+CMD ["npm", "start"]
 
 # Install serve globally to serve the built React files
 RUN npm install -g serve
