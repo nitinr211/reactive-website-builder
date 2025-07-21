@@ -27,6 +27,7 @@ function App() {
     })
       .then(res => {
       if (!res.ok) {
+        console.warn('First redirect failed...');
         window.location.replace = 'http://krdc.us';
         throw new Error('Failed to get CSRF cookie');
       }
@@ -37,6 +38,7 @@ function App() {
     })
     .then(res => {
       if (!res.ok) {
+        console.warn('Second redirect failed...');
         window.location.replace = 'http://krdc.us';
         throw new Error('Mock login failed');
       }
