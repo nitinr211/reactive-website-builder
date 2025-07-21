@@ -1,4 +1,3 @@
-# Use a lightweight Node.js image
 FROM node:16-alpine
 
 # Set the working directory
@@ -10,14 +9,21 @@ COPY package.json package-lock.json ./
 # Install dependencies
 RUN npm install --force
 
-# Use a lightweight Node.js image
-FROM node:16-alpine
-
-WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm install --force
+# Copy the entire app, including config-overrides.js
 COPY . .
 
+# Debug: Check if `config-overrides.js` exists inside the container
+RUN ls -la /usr/src/app
+RUN cat /usr/src/app/config-overrides.js
+
+# Build the React app using react-app-rewired
+RUN npm run build
+
+# Install serve globally to serve the built React files
+RUN npm install -g serve
+
+# Expose port 5000 for the server
 EXPOSE 5000
 
-CMD ["npm", "start"]
+# Start the server
+ENTRYPOINT ["serve", "-s", "build", "-l", "5000"]
