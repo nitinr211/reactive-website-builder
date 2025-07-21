@@ -18,50 +18,40 @@ function App() {
   const [status, setStatus] = useState('Initializing...');
 
   useEffect(() => {
-    const baseURL = 'http://34.55.99.124:8080/';
+    const baseURL = 'http://34.55.99.124:8080';
+    //const baseURL = 'http://localhost:8000';
+    const getCookie = (name) => {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+    };
 
-    setStatus('Getting CSRF cookie...');
+    const xsrfToken = getCookie('XSRF-TOKEN');
 
-    fetch(`${baseURL}/sanctum/csrf-cookie`, {
-      credentials: 'include',
-    })
-      .then(res => {
-      if (!res.ok) {
-        console.warn('First redirect failed...');
-        window.location.replace = 'http://krdc.us';
-        throw new Error('Failed to get CSRF cookie');
-      }
-      setStatus('CSRF cookie set. Logging in...');
-      return fetch(`${baseURL}/api/v1/test-cookie`, {
+    if (xsrfToken) {
+      console.log('✅ XSRF-TOKEN exists — skipping csrf-cookie & test-cookie');
+      setStatus('Already authenticated. Verifying...');
+
+      fetch(`${baseURL}/api/v1/auth-check`, {
         credentials: 'include',
-      });
-    })
-    .then(res => {
-      if (!res.ok) {
-        console.warn('Second redirect failed...');
-        window.location.replace = 'http://krdc.us';
-        throw new Error('Mock login failed');
-      }
-      setStatus('Login response received. Attempting to parse...');
-      return res.text();
-    })
-
-      .then(text => {
-        try {
-          const data = JSON.parse(text); // try parsing as JSON
-          console.log('✅ Logged in user:', data.user);
-          setUser(data.user);
-          setStatus('Login complete!');
-        } catch (err) {
-          console.warn('❌ Not valid JSON. Raw response:', text);
-          setStatus('Error: Invalid JSON response (likely HTML)');
-        }
       })
-      .catch(err => {
-        console.error('❌ Error:', err);
-        setStatus(`Error: ${err.message}`);
-      });
-
+        .then(res => {
+          if (!res.ok) throw new Error('Auth check failed');
+          return res.json();
+        })
+        .then(data => {
+          console.log('✅ Authenticated user:', data.user);
+          setUser(data.user);
+          setStatus('Already logged in!');
+        })
+        .catch(err => {
+          console.error('❌ Auth check error:', err);
+          setStatus('Auth session expired. Please log in again.');
+          // optionally redirect to login
+        });
+    } else {
+      console.warn('⚠️ No XSRF-TOKEN found — redirecting to login');
+      window.location.href = 'http://krdc.us';
+    }
 
 
 
