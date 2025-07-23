@@ -13,7 +13,7 @@ const createMetaAd = async (ads, budget) => {
       `${META_API_URL}/ad_accounts/your_ad_account_id/campaigns`,
       {
         name: "Test Campaign",
-        daily_budget: budget * 100, // Convert to cents
+        daily_budget: budget * 100, 
         status: "ACTIVE",
         objective: "CONVERSIONS",
         targeting: { auto_targeting: true },

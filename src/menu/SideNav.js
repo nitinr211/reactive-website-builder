@@ -137,7 +137,7 @@ const SideNav = () => {
         { label: 'Assets', index: 2 },
         { label: 'Add/Remove Databases', index: 3 },
         { label: 'Graphics/Animations', index: 4 },
-        { label: 'Analytics', index: 5 },
+        { label: 'APIs', index: 5 },
         { label: 'Sign Out', index: 6 },
       ],
       items: [

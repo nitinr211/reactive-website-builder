@@ -46,11 +46,12 @@ function App() {
         .catch(err => {
           console.error('❌ Auth check error:', err);
           setStatus('Auth session expired. Please log in again.');
+          window.location.replace = 'http://krdc.us';
           // optionally redirect to login
         });
     } else {
       console.warn('⚠️ No XSRF-TOKEN found — redirecting to login');
-      window.location.href = 'http://krdc.us';
+      window.location.replace = 'http://krdc.us';
     }
 
 
@@ -151,7 +152,7 @@ function App() {
         onShowCRM={handleShowCRM}
       />
       <div className="app-container">
-        <h1>Tester</h1>
+
         {showDatabases && <Databases />}
         {showMetrics && <Metrics />}
         {showFileLoader && (
