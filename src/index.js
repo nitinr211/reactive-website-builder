@@ -7,14 +7,11 @@ import App from './App';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// 🔥 Completely removed:
-// - Axios login redirect block
-// - auth_token check & window.location.href
 
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename="/digicraft">
     <App />
   </BrowserRouter>,
   rootElement
