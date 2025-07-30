@@ -11,7 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
-  <BrowserRouter basename="/digicraft">
+  // <BrowserRouter basename="/digicraft">
+  <BrowserRouter>
     <App />
   </BrowserRouter>,
   rootElement
