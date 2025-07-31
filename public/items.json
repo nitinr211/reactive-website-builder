@@ -1,0 +1,42 @@
+[
+  {
+    "links": [
+      { "label": "Save/Load", "index": 0 },
+      { "label": "Components", "index": 1 },
+      { "label": "Assets", "index": 2 },
+      { "label": "Add/Remove Databases", "index": 3 },
+      { "label": "Graphics/Animations", "index": 4 },
+      { "label": "APIs", "index": 5 },
+      { "label": "Sign Out", "index": 6 }
+    ],
+    "items": [
+      [
+        { "type": "slider", "label": "Volume", "min": 0, "max": 100, "defaultValue": 50 },
+        { "type": "input", "label": "Username", "placeholder": "Enter your username" }
+      ],
+      [
+        { "type": "slider", "label": "Brightness", "min": 0, "max": 100, "defaultValue": 75 },
+        { "type": "input", "label": "Email", "placeholder": "Enter your email" }
+      ]
+    ]
+  },
+  {
+    "links": [
+      { "label": "Settings", "index": 0 },
+      { "label": "Profile", "index": 1 },
+      { "label": "Help", "index": 2 },
+      { "label": "Back", "index": 0 }
+    ],
+    "items": [
+      [
+        { "type": "slider", "label": "Notification Volume", "min": 0, "max": 100, "defaultValue": 70 },
+        { "type": "input", "label": "User Role", "placeholder": "Enter your role" }
+      ],
+      [
+        { "type": "input", "label": "New Password", "placeholder": "Enter new password" },
+        { "type": "input", "label": "Confirm Password", "placeholder": "Confirm new password" }
+      ]
+    ]
+  }
+]
+

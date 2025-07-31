@@ -35,7 +35,7 @@ const MainMenu = ({onShowDatabases, onShowFileLoader, onShowMetrics, onShowCRM})
                 <NavbarToggler onClick={toggleNavbar} className="mr-2" />
                 <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!collapsed} navbar>
                     <Nav navbar>
-                        <SideNav customMenu={<CustomMenu />} />
+                        <SideNav/>
 
                         <NavItem>
                             <NavLink onClick={onShowFileLoader} className="text-dark" >Home</NavLink>

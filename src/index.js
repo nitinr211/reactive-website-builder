@@ -12,7 +12,7 @@ const rootElement = document.getElementById('root');
 
 ReactDOM.render(
   // <BrowserRouter basename="/digicraft">
-  <BrowserRouter>
+  <BrowserRouter basename="/tool">
     <App />
   </BrowserRouter>,
   rootElement

@@ -19,49 +19,49 @@ function App() {
 
   useEffect(() => {
     //const baseURL = 'http://34.55.99.124:8080';
-  const baseURL = 'http://127.0.0.1:8000';
+//   const baseURL = 'http://127.0.0.1:8000';
 
-const getCookie = (name) => {
-  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  return match ? decodeURIComponent(match[2]) : null;
-};
+// const getCookie = (name) => {
+//   const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+//   return match ? decodeURIComponent(match[2]) : null;
+// };
 
-const xsrfToken = getCookie('XSRF-TOKEN');
+// const xsrfToken = getCookie('XSRF-TOKEN');
 
-if (!xsrfToken) {
-  console.log('🌀 No XSRF-TOKEN — requesting csrf-cookie...');
-  fetch(`${baseURL}/sanctum/csrf-cookie`, { credentials: 'include' })
-    .then(() => {
-      console.log('✅ XSRF-TOKEN now set — proceeding to auth check');
-      runAuthCheck();
-    })
-    .catch(err => {
-      console.error('❌ Failed to fetch csrf-cookie:', err);
-    });
-} else {
-  console.log('✅ XSRF-TOKEN exists — running auth check');
-  runAuthCheck();
-}
+// if (!xsrfToken) {
+//   console.log('🌀 No XSRF-TOKEN — requesting csrf-cookie...');
+//   fetch(`${baseURL}/sanctum/csrf-cookie`, { credentials: 'include' })
+//     .then(() => {
+//       console.log('✅ XSRF-TOKEN now set — proceeding to auth check');
+//       runAuthCheck();
+//     })
+//     .catch(err => {
+//       console.error('❌ Failed to fetch csrf-cookie:', err);
+//     });
+// } else {
+//   console.log('✅ XSRF-TOKEN exists — running auth check');
+//   runAuthCheck();
+// }
 
-function runAuthCheck() {
-  fetch(`${baseURL}/api/v1/auth-check`, {
-    credentials: 'include',
-  })
-    .then(res => {
-      if (!res.ok) throw new Error('Auth check failed');
-      return res.json();
-    })
-    .then(data => {
-      console.log('✅ Authenticated user:', data.user);
-      setUser(data.user);
-      setStatus('Already logged in!');
-    })
-    .catch(err => {
-      console.error('❌ Auth check error:', err);
-      setStatus('Auth session expired. Please log in again.');
-      // window.location.replace('http://krdc.us/login');
-    });
-}
+// function runAuthCheck() {
+//   fetch(`${baseURL}/api/v1/auth-check`, {
+//     credentials: 'include',
+//   })
+//     .then(res => {
+//       if (!res.ok) throw new Error('Auth check failed');
+//       return res.json();
+//     })
+//     .then(data => {
+//       console.log('✅ Authenticated user:', data.user);
+//       setUser(data.user);
+//       setStatus('Already logged in!');
+//     })
+//     .catch(err => {
+//       console.error('❌ Auth check error:', err);
+//       setStatus('Auth session expired. Please log in again.');
+//       // window.location.replace('http://krdc.us/login');
+//     });
+// }
 
 
 
